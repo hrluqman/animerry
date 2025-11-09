@@ -7,7 +7,7 @@ export interface ApiOptions {
   init?: RequestInit;
 }
 
-type Params = Record<string, string | number | boolean | undefined>;
+type Params = Record<string, string | string[] | number | boolean | undefined>;
 
 const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
 

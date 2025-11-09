@@ -1,4 +1,4 @@
-import searchSlice from "../app/slice/searchSlice";
+import searchSlice from "./slice/searchSlice";
 
 export const rootReducer = {
   search: searchSlice,
