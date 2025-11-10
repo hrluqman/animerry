@@ -11,6 +11,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   resetSearch,
+  setCurrentQuery,
   setLoading,
   setPagination,
   setResults,
@@ -91,6 +92,7 @@ const SearchPage = () => {
       );
       dispatch(setResults(response?.data));
       dispatch(setPagination(response?.pagination));
+      dispatch(setCurrentQuery(searchParams));
       const next = new URLSearchParams(params);
       next.set("page", searchParams.page.toString());
       navigate(
