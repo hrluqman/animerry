@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { fetchJikanApi } from "../../api/http";
 import { TOP_ANIME_URL } from "../../api/constants";
 import { Card } from "../ui/card";
 import AnimeHoverCard from "./AnimeHoverCard";
 import PaginationButton from "./PaginationButton";
+import { Alert, AlertDescription } from "../ui/alert";
 
 const TopAnimeGrid = () => {
   const navigate = useNavigate();
@@ -12,9 +13,12 @@ const TopAnimeGrid = () => {
   const [topAnime, setTopAnime] = useState<Record<string, any>>();
   const [currentPage, setCurrentPage] = useState<Record<string, any>>();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const didFetch = useRef(false);
 
   const fetchTopAnime = async (pageNumber: number = 1) => {
     setLoading(true);
+    setError(null);
 
     try {
       const ac = new AbortController();
@@ -26,14 +30,24 @@ const TopAnimeGrid = () => {
       setCurrentPage(response?.pagination);
       setTopAnime(response?.data);
     } catch (error) {
-      console.error();
+      setError(
+        "Oops! We receive an unexpected error at the moment... Please try again later."
+      );
+      setTopAnime([] as any);
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchTopAnime();
+    // Didfetch needed to avoid calling api twice during development that cause by StrictMode
+    if (didFetch.current) return;
+    didFetch.current = true;
+
+    (async () => {
+      await fetchTopAnime();
+    })();
   }, []);
 
   const setURLParams = (pageNumber: string) => {
@@ -61,6 +75,14 @@ const TopAnimeGrid = () => {
 
   return (
     <>
+      {error && (
+        <Alert
+          variant="destructive"
+          className="bg-red-900/40 border-red-500/40 text-red-100 mt-8"
+        >
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
       <h2 className="text-light text-2xl font-semibold mt-8 mb-4">
         Top Recommendations
       </h2>
@@ -72,16 +94,20 @@ const TopAnimeGrid = () => {
               className="bg-transparent h-full border-0 w-full aspect-[2/3] bg-zinc-800 animate-pulse"
             />
           ))
-        ) : (
+        ) : error ? null : (
           <>
             {topAnime?.length > 0 &&
               topAnime?.map((item: any, index: number) => (
-                <AnimeHoverCard key={`${item.mal_id}-${index}`} item={item} index={index} />
+                <AnimeHoverCard
+                  key={`${item.mal_id}-${index}`}
+                  item={item}
+                  index={index}
+                />
               ))}
           </>
         )}
       </div>
-      {topAnime?.length > 0 && (
+      {!error && topAnime?.length > 0 && (
         <PaginationButton nextPage={nextPage} prevPage={prevPage} />
       )}
     </>

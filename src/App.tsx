@@ -6,7 +6,7 @@ import {
   TOP_ANIME_URL,
   UPCOMING_ANIME_URL,
 } from "./api/constants";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchJikanApi } from "./api/http";
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
   const [seasonAnime, setSeasonAnime] = useState<Record<string, any>>();
   const [upcomingAnime, setUpcomingAnime] = useState<Record<string, any>>();
   const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  const didFetch = useRef(false);
 
   const fetchAnimeList = async (ANIME_URL: string = TOP_ANIME_URL) => {
     try {
@@ -30,16 +31,20 @@ function App() {
   };
 
   useEffect(() => {
+    // Didfetch needed to avoid calling api twice during development that cause by StrictMode
+    if (didFetch.current) return;
+    didFetch.current = true;
+
     (async () => {
       const popular = await fetchAnimeList(TOP_ANIME_URL);
       setPopularAnime(popular);
-      await delay(1000);
+      await delay(500);
       const top = await fetchAnimeList(SEASON_ANIME_URL);
       setSeasonAnime(top);
-      await delay(1000);
+      await delay(500);
       const upcoming = await fetchAnimeList(UPCOMING_ANIME_URL);
       setUpcomingAnime(upcoming);
-      await delay(1000);
+      await delay(500);
     })();
   }, []);
 

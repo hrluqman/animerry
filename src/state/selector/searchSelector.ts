@@ -32,3 +32,8 @@ export const selectSearchStarted = createSelector(
   selectSearchState,
   (s) => s.searchStarted
 );
+
+export const selectSearchError = createSelector(
+  selectSearchState,
+  (s) => s.error
+);

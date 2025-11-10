@@ -32,3 +32,8 @@ export const selectQuickSearchStarted = createSelector(
   selectQuickSearchState,
   (s) => s.searchStarted
 );
+
+export const selectQuickSearchError = createSelector(
+  selectQuickSearchState,
+  (s) => s.error
+);

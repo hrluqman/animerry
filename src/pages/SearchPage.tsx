@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AnimerryFooter from "../components/composite/AnimerryFooter";
 import CheckboxDropdown from "../components/composite/CheckboxDropdown";
 import Navbar from "../components/composite/Navbar";
@@ -15,6 +15,7 @@ import {
   setLoading,
   setPagination,
   setResults,
+  setSearchError,
   setSearchStarted,
 } from "../state/slice/searchSlice";
 import { resetAnimeDetails } from "../state/slice/animeDetailsSlice";
@@ -66,6 +67,7 @@ const SearchPage = () => {
   const [rating, setRating] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [genresList, setGenresList] = useState(genreSelection);
+  const didFetch = useRef(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -83,7 +85,13 @@ const SearchPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    fetchAnimeGenres();
+    // Didfetch needed to avoid calling api twice during development that cause by StrictMode
+    if (didFetch.current) return;
+    didFetch.current = true;
+
+    (async () => {
+      await fetchAnimeGenres();
+    })();
   }, []);
 
   const fetchAnimeGenres = async () => {
@@ -104,13 +112,14 @@ const SearchPage = () => {
       setGenresList(tempGenre);
       return response?.genres;
     } catch (error) {
-      console.error();
+      console.error(error);
     }
   };
 
   const fetchSearchAnime = async (searchParams: Record<string, any>) => {
+    dispatch(setLoading(true));
+    dispatch(setSearchError(null));
     try {
-      dispatch(setLoading(true));
       const ac = new AbortController();
       const response: Record<string, any> = await fetchJikanApi(
         SEARCH_URL,
@@ -127,7 +136,13 @@ const SearchPage = () => {
         { replace: false }
       );
     } catch (error) {
-      console.error();
+      dispatch(
+        setSearchError(
+          "Oops! We receive an unexpected error at the moment... Please try again later."
+        )
+      );
+      dispatch(setResults([]));
+      console.error(error);
     } finally {
       dispatch(setLoading(false));
     }

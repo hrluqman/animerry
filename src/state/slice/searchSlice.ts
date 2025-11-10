@@ -17,6 +17,7 @@ interface SearchState {
   currentPage: string;
   currentQuery: SearchFilters;
   searchStarted: boolean;
+  error: string | null;
 }
 
 const defaultQuery: SearchFilters = {
@@ -36,6 +37,7 @@ const initialState: SearchState = {
   currentPage: "1",
   currentQuery: defaultQuery,
   searchStarted: false,
+  error: null,
 };
 
 const slice = createSlice({
@@ -45,35 +47,51 @@ const slice = createSlice({
     setLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
-    // 2) set searched results
     setResults(state, action: PayloadAction<Record<string, any>>) {
       state.results = action.payload;
     },
     setPagination(state, action: PayloadAction<Record<string, any>>) {
       state.pagination = action.payload;
     },
-    // 3) set current page (string)
     setCurrentPage(state, action: PayloadAction<string>) {
       state.currentPage = action.payload;
     },
-    // 4) set current query (merge with defaults; keeps limit=24 unless overridden)
-    setCurrentQuery(state, action: PayloadAction<Partial<SearchFilters> | SearchFilters>) {
-      state.currentQuery = { ...defaultQuery, ...state.currentQuery, ...action.payload };
+    // set current query (merge with defaults; keeps limit=24 unless overridden)
+    setCurrentQuery(
+      state,
+      action: PayloadAction<Partial<SearchFilters> | SearchFilters>
+    ) {
+      state.currentQuery = {
+        ...defaultQuery,
+        ...state.currentQuery,
+        ...action.payload,
+      };
       if (!("limit" in action.payload)) state.currentQuery.limit = 24;
     },
     setSearchStarted(state, action: PayloadAction<boolean>) {
       state.searchStarted = action.payload;
     },
-    // (optional) quick reset between searches
+    setSearchError(state, action: PayloadAction<string | null>) {
+      state.error = action.payload;
+    },
     resetSearch(state) {
       state.loading = false;
       state.results = null;
       state.currentPage = "1";
       state.currentQuery = defaultQuery;
+      state.error = null;
     },
   },
 });
 
-export const { setLoading, setResults, setPagination, setCurrentPage, setCurrentQuery, setSearchStarted, resetSearch } =
-  slice.actions;
+export const {
+  setLoading,
+  setResults,
+  setPagination,
+  setCurrentPage,
+  setCurrentQuery,
+  setSearchStarted,
+  setSearchError,
+  resetSearch,
+} = slice.actions;
 export default slice.reducer;

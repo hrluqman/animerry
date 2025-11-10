@@ -17,6 +17,7 @@ interface MangaSearchState {
   currentPage: string;
   currentQuery: MangaSearchFilters;
   searchStarted: boolean;
+  error: string | null;
 }
 
 const defaultQuery: MangaSearchFilters = {
@@ -36,6 +37,7 @@ const initialState: MangaSearchState = {
   currentPage: "1",
   currentQuery: defaultQuery,
   searchStarted: false,
+  error: null,
 };
 
 const slice = createSlice({
@@ -49,7 +51,10 @@ const slice = createSlice({
     setMangaSearchResults(state, action: PayloadAction<Record<string, any>>) {
       state.results = action.payload;
     },
-    setMangaSearchPagination(state, action: PayloadAction<Record<string, any>>) {
+    setMangaSearchPagination(
+      state,
+      action: PayloadAction<Record<string, any>>
+    ) {
       state.pagination = action.payload;
     },
     // 3) set current page (string)
@@ -57,23 +62,41 @@ const slice = createSlice({
       state.currentPage = action.payload;
     },
     // 4) set current query (merge with defaults; keeps limit=24 unless overridden)
-    setMangaSearchCurrentQuery(state, action: PayloadAction<Partial<MangaSearchFilters> | MangaSearchFilters>) {
-      state.currentQuery = { ...defaultQuery, ...state.currentQuery, ...action.payload };
+    setMangaSearchCurrentQuery(
+      state,
+      action: PayloadAction<Partial<MangaSearchFilters> | MangaSearchFilters>
+    ) {
+      state.currentQuery = {
+        ...defaultQuery,
+        ...state.currentQuery,
+        ...action.payload,
+      };
       if (!("limit" in action.payload)) state.currentQuery.limit = 24;
     },
     setMangaSearchStarted(state, action: PayloadAction<boolean>) {
       state.searchStarted = action.payload;
     },
-    // (optional) quick reset between searches
+    setMangaSearchError(state, action: PayloadAction<string | null>) {
+      state.error = action.payload;
+    },
     resetMangaSearch(state) {
       state.loading = false;
       state.results = null;
       state.currentPage = "1";
       state.currentQuery = defaultQuery;
+      state.error = null;
     },
   },
 });
 
-export const { setMangaSearchLoading, setMangaSearchResults, setMangaSearchPagination, setMangaSearchCurrentPage, setMangaSearchCurrentQuery, setMangaSearchStarted, resetMangaSearch } =
-  slice.actions;
+export const {
+  setMangaSearchLoading,
+  setMangaSearchResults,
+  setMangaSearchPagination,
+  setMangaSearchCurrentPage,
+  setMangaSearchCurrentQuery,
+  setMangaSearchStarted,
+  setMangaSearchError,
+  resetMangaSearch,
+} = slice.actions;
 export default slice.reducer;

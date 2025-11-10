@@ -4,6 +4,7 @@ import TopAnimeGrid from "./TopAnimeGrid";
 import { useAppSelector } from "../../state/hooks";
 import {
   selectSearchCurrentQuery,
+  selectSearchError,
   selectSearchLoading,
   selectSearchPagination,
   selectSearchResults,
@@ -11,6 +12,7 @@ import {
 } from "../../state/selector/searchSelector";
 import AnimeHoverCard from "./AnimeHoverCard";
 import PaginationButton from "./PaginationButton";
+import { Alert, AlertDescription } from "../ui/alert";
 
 type SearchResultsGridProps = {
   fetchSearchAnime: (searchParams: Record<string, any>) => void;
@@ -24,6 +26,7 @@ const SearchResultsGrid = ({ fetchSearchAnime }: SearchResultsGridProps) => {
   const searchStarted = useAppSelector(selectSearchStarted);
   const searchQuery = useAppSelector(selectSearchCurrentQuery);
   const currentPage = useAppSelector(selectSearchPagination);
+  const error = useAppSelector(selectSearchError);
 
   const setURLParams = (pageNumber: string) => {
     const next = new URLSearchParams(params);
@@ -59,8 +62,16 @@ const SearchResultsGrid = ({ fetchSearchAnime }: SearchResultsGridProps) => {
 
   return (
     <>
+      {error && (
+        <Alert
+          variant="destructive"
+          className="bg-red-900/40 border-red-500/40 text-red-100 mt-8"
+        >
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
       <h2 className="text-light text-2xl font-semibold mt-8 mb-4">
-        Search results:
+        {!isLoading && searchResults?.length === 0 ? "" : "Search results:"}
       </h2>
       <div className="grid gap-4 grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
         {isLoading
@@ -72,7 +83,11 @@ const SearchResultsGrid = ({ fetchSearchAnime }: SearchResultsGridProps) => {
             ))
           : searchResults?.length > 0 &&
             searchResults?.map((item: any, index: number) => (
-              <AnimeHoverCard key={`${item.mal_id}-${index}`} item={item} index={index} />
+              <AnimeHoverCard
+                key={`${item.mal_id}-${index}`}
+                item={item}
+                index={index}
+              />
             ))}
       </div>
       {searchResults?.length > 0 && (

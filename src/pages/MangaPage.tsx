@@ -7,20 +7,23 @@ import { MANGA_SEARCH_URL } from "../api/constants";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDebounce } from "../hooks/useDebounce";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
+import { Card } from "../components/ui/card";
+import { Alert, AlertDescription } from "../components/ui/alert";
 import {
   resetMangaSearch,
   setMangaSearchCurrentQuery,
+  setMangaSearchError,
   setMangaSearchLoading,
   setMangaSearchPagination,
   setMangaSearchResults,
 } from "../state/slice/mangaSearchSlice";
 import {
   selectMangaSearchCurrentQuery,
+  selectMangaSearchError,
   selectMangaSearchLoading,
   selectMangaSearchPagination,
   selectMangaSearchResults,
 } from "../state/selector/mangaSearchSelector";
-import { Card } from "../components/ui/card";
 import AnimeHoverCard from "../components/composite/AnimeHoverCard";
 import PaginationButton from "../components/composite/PaginationButton";
 
@@ -35,6 +38,7 @@ const MangaPage = () => {
   const mangaSearchResults = useAppSelector(selectMangaSearchResults);
   const currentPage = useAppSelector(selectMangaSearchPagination);
   const savedQuery = useAppSelector(selectMangaSearchCurrentQuery);
+  const error = useAppSelector(selectMangaSearchError);
 
   const setURLParams = (pageNumber: string) => {
     const next = new URLSearchParams(params);
@@ -51,8 +55,9 @@ const MangaPage = () => {
   }, [dispatch]);
 
   const fetchSearchManga = async (searchParams: Record<string, any>) => {
+    dispatch(setMangaSearchLoading(true));
+    dispatch(setMangaSearchError(null));
     try {
-      dispatch(setMangaSearchLoading(true));
       const ac = new AbortController();
       const response: Record<string, any> = await fetchJikanApi(
         MANGA_SEARCH_URL,
@@ -64,7 +69,13 @@ const MangaPage = () => {
       dispatch(setMangaSearchCurrentQuery(searchParams));
       setURLParams(searchParams.page.toString());
     } catch (error) {
-      console.error();
+      dispatch(
+        setMangaSearchError(
+          "Oops! We receive an unexpected error at the moment... Please try again later."
+        )
+      );
+      dispatch(setMangaSearchResults([]));
+      console.error(error);
     } finally {
       dispatch(setMangaSearchLoading(false));
     }
@@ -102,6 +113,14 @@ const MangaPage = () => {
       <div className="container w-full max-w-7xl mx-auto">
         <SearchBar value={searchQuery} onChange={(e) => setSearchQuery(e)} />
 
+        {error && (
+          <Alert
+            variant="destructive"
+            className="bg-red-900/40 border-red-500/40 text-red-100 mt-8"
+          >
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
         <h2 className="text-light text-2xl font-semibold mt-8 mb-4">
           {searchQuery === "" ? "" : "Search results:"}
         </h2>

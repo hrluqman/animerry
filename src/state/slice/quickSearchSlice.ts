@@ -17,6 +17,7 @@ interface QuickSearchState {
   currentPage: string;
   currentQuery: QuickSearchFilters;
   searchStarted: boolean;
+  error: string | null;
 }
 
 const defaultQuery: QuickSearchFilters = {
@@ -36,6 +37,7 @@ const initialState: QuickSearchState = {
   currentPage: "1",
   currentQuery: defaultQuery,
   searchStarted: false,
+  error: null,
 };
 
 const slice = createSlice({
@@ -45,35 +47,54 @@ const slice = createSlice({
     setQuickSearchLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
-    // 2) set searched results
     setQuickSearchResults(state, action: PayloadAction<Record<string, any>>) {
       state.results = action.payload;
     },
-    setQuickSearchPagination(state, action: PayloadAction<Record<string, any>>) {
+    setQuickSearchPagination(
+      state,
+      action: PayloadAction<Record<string, any>>
+    ) {
       state.pagination = action.payload;
     },
-    // 3) set current page (string)
     setQuickSearchCurrentPage(state, action: PayloadAction<string>) {
       state.currentPage = action.payload;
     },
-    // 4) set current query (merge with defaults; keeps limit=24 unless overridden)
-    setQuickSearchCurrentQuery(state, action: PayloadAction<Partial<QuickSearchFilters> | QuickSearchFilters>) {
-      state.currentQuery = { ...defaultQuery, ...state.currentQuery, ...action.payload };
+    // set current query (merge with defaults; keeps limit=24 unless overridden)
+    setQuickSearchCurrentQuery(
+      state,
+      action: PayloadAction<Partial<QuickSearchFilters> | QuickSearchFilters>
+    ) {
+      state.currentQuery = {
+        ...defaultQuery,
+        ...state.currentQuery,
+        ...action.payload,
+      };
       if (!("limit" in action.payload)) state.currentQuery.limit = 24;
     },
     setQuickSearchStarted(state, action: PayloadAction<boolean>) {
       state.searchStarted = action.payload;
     },
-    // (optional) quick reset between searches
+    setQuickSearchError(state, action: PayloadAction<string | null>) {
+      state.error = action.payload;
+    },
     resetQuickSearch(state) {
       state.loading = false;
       state.results = null;
       state.currentPage = "1";
       state.currentQuery = defaultQuery;
+      state.error = null;
     },
   },
 });
 
-export const { setQuickSearchLoading, setQuickSearchResults, setQuickSearchPagination, setQuickSearchCurrentPage, setQuickSearchCurrentQuery, setQuickSearchStarted, resetQuickSearch } =
-  slice.actions;
+export const {
+  setQuickSearchLoading,
+  setQuickSearchResults,
+  setQuickSearchPagination,
+  setQuickSearchCurrentPage,
+  setQuickSearchCurrentQuery,
+  setQuickSearchStarted,
+  setQuickSearchError,
+  resetQuickSearch,
+} = slice.actions;
 export default slice.reducer;

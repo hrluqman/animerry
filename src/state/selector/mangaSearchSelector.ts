@@ -32,3 +32,8 @@ export const selectMangaSearchStarted = createSelector(
   selectMangaSearchState,
   (s) => s.searchStarted
 );
+
+export const selectMangaSearchError = createSelector(
+  selectMangaSearchState,
+  (s) => s.error
+);
