@@ -1,73 +1,76 @@
-# React + TypeScript + Vite
+# Animerry – Anime Search App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Animerry is a React + TypeScript single-page application that showcases seasonal anime highlights and lets fans search the Jikan API for shows or manga, then drill into detail pages powered by Redux state.
 
-Currently, two official plugins are available:
+## Features
+- **Anime search with filters** – combine keyword, status, type, genre, and rating facets, then fetch paginated results from the server.
+- **Server-side pagination** – request the next/previous page from Jikan while keeping query params in sync with the URL.
+- **Debounced quick search** – the navbar includes a 250 ms debounced autosuggest dropdown for rapid lookups without leaving the current page.
+- **Anime detail view** – rich layouts for synopsis, studios, genres, airing info, and streaming links.
+- **Top anime showcase** – homepage and empty-search state highlight curated carousels fetched from the API.
+- **Responsive UI & loading skeletons** – tailwind-styled components, animated placeholders, and hover cards for consistent UX.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+- React 19 with Vite
+- TypeScript
+- Redux Toolkit & React Redux
+- react-router-dom v7
+- Radix UI primitives & custom Tailwind CSS styling
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project Structure
+```
+src/
+├── api/               # fetch utilities and endpoint constants
+├── components/
+│   ├── composite/     # feature-level UI (navbar, grids, hover cards, detail layout)
+│   └── ui/            # reusable primitives (button, card, carousel, dropdown, input, skeleton)
+├── hooks/             # custom hooks (useDebounce)
+├── pages/             # route-level components (home, search, detail, manga)
+├── state/             # Redux store, slices, selectors, hooks
+├── App.tsx            # route shell
+└── main.tsx           # SPA entrypoint & router setup
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
+1. **Prerequisites** – Node.js 18+ and npm 9+.
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+3. **Run the development server (port 4000, strict)**
+   ```bash
+   npm run dev
+   ```
+4. Visit [http://localhost:4000](http://localhost:4000) in your browser.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Additional Scripts
+- `npm run build` – type-check and create a production build.
+- `npm run lint` – run ESLint against the project.
+- `npm run preview` – preview the production build locally.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## API Usage
+All data comes from the public [Jikan REST API](https://docs.api.jikan.moe/). Fetch helpers in `src/api/http.ts` add retry logic, timeouts, and template-driven URLs, while constants in `src/api/constants.ts` centralize endpoint strings.
+
+## State Management
+The Redux store (see `src/state/store.ts`) combines feature slices for search, quick search, manga, and anime detail flows. Selectors expose memoized state, and typed hooks (`useAppDispatch`, `useAppSelector`) simplify usage in components.
+
+## Known Limitations
+- The primary search form still requires clicking the **Search** button; instant debounced fetching and aborting in-flight requests are only implemented for the navbar quick search.
+- Previous API requests are not cancelled when starting a new query from the main form.
+
+## Submission Checklist
+- [x] Project uses npm only (lockfile included)
+- [x] `npm install` and `npm run dev` start the app successfully
+- [x] Dev server is pinned to port 4000 (`vite.config.ts`)
+- [x] No environment variables required for local development
+- [x] Project deployment URL – (https://animerry.vercel.app/)
+- [x] Core functionality implemented with React + TypeScript + Redux state
+
+## Bonus Implementation
+- Debounced navbar quick-search
+- Animated loading skeletons for cards and grids
+- Scroll-aware navbar that hides on downward scroll and reappears on upward scroll
+- Carousel anime list on home page
+
+## Contributing
+Issues and pull requests are welcome. Please run `npm run lint` before submitting changes.
