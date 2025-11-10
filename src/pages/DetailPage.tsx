@@ -14,7 +14,7 @@ const DetailPage = () => {
   const animeDetailsLoading = useAppSelector(selectAnimeDetailsLoading);
 
   const fetchAnimeDetails = async (id: string) => {
-    setDetailsLoading(true);
+    dispach(setDetailsLoading(true));
 
     try {
       const ac = new AbortController();
@@ -27,7 +27,7 @@ const DetailPage = () => {
     } catch (error) {
       console.error();
     } finally {
-      setDetailsLoading(false);
+      dispach(setDetailsLoading(false));
     }
   };
 
