@@ -1,6 +1,8 @@
 import type { Key } from "react";
 import Navbar from "./Navbar";
 import AnimerryFooter from "./AnimerryFooter";
+import { Card } from "../ui/card";
+import type { JikanRecommendation } from "../../lib/jikanTyping";
 
 type Img = { webp?: { image_url?: string; large_image_url?: string } };
 
@@ -24,6 +26,7 @@ type AnimeDetail = {
 
 interface AnimeDetailPageProps {
   data: AnimeDetail;
+  animeRecommendations: JikanRecommendation[];
 }
 
 const chip = (label: string, key?: Key) => (
@@ -35,7 +38,10 @@ const chip = (label: string, key?: Key) => (
   </span>
 );
 
-export default function AnimeDetailPage({ data }: AnimeDetailPageProps) {
+export default function AnimeDetailPage({
+  data,
+  animeRecommendations,
+}: AnimeDetailPageProps) {
   const banner = data.images?.webp?.large_image_url || "";
   const cover = data.images?.webp?.image_url || banner;
   const title = data.title_english || data.title || "Untitled";
@@ -160,6 +166,40 @@ export default function AnimeDetailPage({ data }: AnimeDetailPageProps) {
               )}
             </div>
           </aside>
+        </section>
+
+        {/* Anime Recommendations */}
+        <section className="mt-6">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-white/70">
+            Recommendations
+          </h2>
+          <div className="grid gap-4 grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
+            {animeRecommendations?.length ? (
+              animeRecommendations.map((item: JikanRecommendation, index: number) => (
+                <a
+                  key={`${item.entry.mal_id}-${index}`}
+                  href={`/anime/${item.entry.mal_id}`}
+                >
+                  <Card className="bg-transparent relative h-full flex flex-col justify-between border-0 hover:shadow-md gap-2 pt-0">
+                    {/* Fixed aspect-ratio image wrapper */}
+                    <div className="relative w-full aspect-[2/3] overflow-hidden rounded">
+                      <img
+                        src={item.entry.images?.webp?.large_image_url}
+                        alt={item.entry.title}
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-all duration-300 ease-in-out"
+                      />
+                    </div>
+                    <p className="text-light text-sm font-semibold truncate">
+                      {item.entry.title}
+                    </p>
+                  </Card>
+                </a>
+              ))
+            ) : (
+              <p className="text-xs text-white/60">Not available</p>
+            )}
+          </div>
         </section>
       </div>
 

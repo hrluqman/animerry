@@ -105,3 +105,28 @@ export const getPoster = (img?: JikanImages) =>
 // Helper to pick large/backdrop-ish
 export const getLargeImage = (img?: JikanImages) =>
   img?.webp?.large_image_url ?? img?.jpg?.large_image_url ?? getPoster(img);
+
+
+/////////////////////////////
+////// Recommendations //////
+/////////////////////////////
+
+// Recommendation entry (the recommended anime)
+export interface JikanRecommendationEntry {
+  mal_id: number;
+  url: string;
+  images: JikanImages;
+  title: string;
+}
+
+// Recommendation item
+export interface JikanRecommendation {
+  entry: JikanRecommendationEntry;
+  url: string;   // link to the recommendation page
+  votes: number;
+}
+
+// If fetching from Jikan (common shape)
+export interface JikanRecommendationResponse {
+  data: JikanRecommendation[];
+}
