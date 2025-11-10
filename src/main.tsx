@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store } from "./app/store.ts";
+import { store } from "./state/store.ts";
 import "./index.css";
 import App from "./App.tsx";
 import SearchPage from "./pages/SearchPage";

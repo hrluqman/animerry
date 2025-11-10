@@ -6,20 +6,20 @@ import { fetchJikanApi } from "../api/http";
 import { MANGA_SEARCH_URL } from "../api/constants";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDebounce } from "../hooks/useDebounce";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
 import {
   resetMangaSearch,
   setMangaSearchCurrentQuery,
   setMangaSearchLoading,
   setMangaSearchPagination,
   setMangaSearchResults,
-} from "../app/slice/mangaSearchSlice";
+} from "../state/slice/mangaSearchSlice";
 import {
   selectMangaSearchCurrentQuery,
   selectMangaSearchLoading,
   selectMangaSearchPagination,
   selectMangaSearchResults,
-} from "../app/selector/mangaSearchSelector";
+} from "../state/selector/mangaSearchSelector";
 import { Card } from "../components/ui/card";
 import AnimeHoverCard from "../components/composite/AnimeHoverCard";
 import PaginationButton from "../components/composite/PaginationButton";

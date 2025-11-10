@@ -1,14 +1,14 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Card } from "../ui/card";
 import TopAnimeGrid from "./TopAnimeGrid";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../state/hooks";
 import {
   selectSearchCurrentQuery,
   selectSearchLoading,
   selectSearchPagination,
   selectSearchResults,
   selectSearchStarted,
-} from "../../app/selector/searchSelector";
+} from "../../state/selector/searchSelector";
 import AnimeHoverCard from "./AnimeHoverCard";
 import PaginationButton from "./PaginationButton";
 

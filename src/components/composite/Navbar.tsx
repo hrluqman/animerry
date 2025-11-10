@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "../../lib/utils";
 import SearchBar from "./Searchbar";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import { fetchJikanApi } from "../../api/http";
 import { SEARCH_URL } from "../../api/constants";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -10,9 +10,9 @@ import {
   setQuickSearchLoading,
   setQuickSearchPagination,
   setQuickSearchResults,
-} from "../../app/slice/quickSearchSlice";
+} from "../../state/slice/quickSearchSlice";
 import { Card } from "../ui/card";
-import { selectQuickSearchResults } from "../../app/selector/quickSearchSelector";
+import { selectQuickSearchResults } from "../../state/selector/quickSearchSelector";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 
 const SCROLL_THRESHOLD_PX = 24;

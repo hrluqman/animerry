@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { fetchJikanApi } from "../api/http";
 import { useParams } from "react-router-dom";
 import { DETAIL_URL } from "../api/constants";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { setAnimeDetails, setDetailsLoading } from "../app/slice/animeDetailsSlice";
-import { selectAnimeDetails, selectAnimeDetailsLoading } from "../app/selector/animeDetailsSelector";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
+import { setAnimeDetails, setDetailsLoading } from "../state/slice/animeDetailsSlice";
+import { selectAnimeDetails, selectAnimeDetailsLoading } from "../state/selector/animeDetailsSelector";
 import AnimeDetailPage from "../components/composite/AnimeDetails";
 
 const DetailPage = () => {

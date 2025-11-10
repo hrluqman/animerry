@@ -16,8 +16,8 @@ import {
   setPagination,
   setResults,
   setSearchStarted,
-} from "../app/slice/searchSlice";
-import { resetAnimeDetails } from "../app/slice/animeDetailsSlice";
+} from "../state/slice/searchSlice";
+import { resetAnimeDetails } from "../state/slice/animeDetailsSlice";
 
 // Enum: "tv" "movie" "ova" "special" "ona" "music" "tv_special"
 const typeSelection = [
