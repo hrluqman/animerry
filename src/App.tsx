@@ -44,7 +44,7 @@ function App() {
   }, []);
 
   return (
-    <main className="bg-theme-dark min-h-screen w-full pt-[8rem] overflow-x-hidden p-4">
+    <main className="bg-theme-dark min-h-screen w-full pt-[5rem] md:pt-[8rem] overflow-x-hidden p-4">
       <Navbar />
 
       <section className="container w-full max-w-7xl mx-auto">

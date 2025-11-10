@@ -96,7 +96,7 @@ const MangaPage = () => {
   };
 
   return (
-    <main className="bg-theme-dark min-h-screen w-full pt-[8rem] overflow-x-hidden p-4">
+    <main className="bg-theme-dark min-h-screen w-full pt-[6rem] md:pt-[8rem] overflow-x-hidden p-4">
       <Navbar />
 
       <div className="container w-full max-w-7xl mx-auto">

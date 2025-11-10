@@ -3,8 +3,14 @@ import { fetchJikanApi } from "../api/http";
 import { useParams } from "react-router-dom";
 import { DETAIL_URL } from "../api/constants";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
-import { setAnimeDetails, setDetailsLoading } from "../state/slice/animeDetailsSlice";
-import { selectAnimeDetails, selectAnimeDetailsLoading } from "../state/selector/animeDetailsSelector";
+import {
+  setAnimeDetails,
+  setDetailsLoading,
+} from "../state/slice/animeDetailsSlice";
+import {
+  selectAnimeDetails,
+  selectAnimeDetailsLoading,
+} from "../state/selector/animeDetailsSelector";
 import AnimeDetailPage from "../components/composite/AnimeDetails";
 
 const DetailPage = () => {
@@ -32,17 +38,22 @@ const DetailPage = () => {
   };
 
   useEffect(() => {
-    if(id) fetchAnimeDetails(id);
+    if (id) fetchAnimeDetails(id);
   }, [id]);
 
-  if(animeDetailsLoading) return <div>Loading...</div>;
+  if (animeDetailsLoading)
+    return (
+      <main className="bg-theme-dark min-h-screen w-full pt-[8rem] overflow-x-hidden p-4">
+        <p className="text-center text-light">Loading...</p>
+      </main>
+    );
 
-  if(!animeDetailsLoading && animeDetails) return <AnimeDetailPage data={animeDetails?.data} />;
+  if (!animeDetailsLoading && animeDetails)
+    return <AnimeDetailPage data={animeDetails?.data} />;
 
   return (
-    <main className="bg-theme-dark min-h-screen w-full pt-[8rem] overflow-x-hidden p-4">
-    </main>
-  )
+    <main className="bg-theme-dark min-h-screen w-full pt-[8rem] overflow-x-hidden p-4"></main>
+  );
 };
 
 export default DetailPage;

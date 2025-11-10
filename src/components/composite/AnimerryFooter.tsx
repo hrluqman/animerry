@@ -10,7 +10,7 @@ const AnimerryFooter = () => {
         </p>
       </div>
       <div>
-        <p className="text-light text-[9px]">
+        <p className="text-light text-center text-[9px] px-4">
           Disclaimer: This site does not store any files on its server. All
           contents are provided by non-affiliated third parties.
         </p>
