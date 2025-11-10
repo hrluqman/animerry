@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { fetchJikanApi } from "../../api/http";
-import { TOP_ANIME_URL } from "../../api/constants";
 import { Card } from "../ui/card";
 import {
   Carousel,
@@ -13,34 +11,15 @@ import AnimeHoverCard from "./AnimeHoverCard";
 
 type HomeAnimeGridProps = {
   title: string;
-  anime_url: string;
+  animeList: Record<string, any> | undefined;
 };
 
-const HomeAnimeGrid = ({ title, anime_url }: HomeAnimeGridProps) => {
-  const [animeList, setAnimeList] = useState<Record<string, any>>();
-  const [loading, setLoading] = useState(false);
-
-  const fetchAnimeList = async (ANIME_URL: string = TOP_ANIME_URL) => {
-    setLoading(true);
-
-    try {
-      const ac = new AbortController();
-      const response: Record<string, any> = await fetchJikanApi(
-        ANIME_URL,
-        { limit: 12 },
-        { signal: ac.signal }
-      );
-      setAnimeList(response?.data);
-    } catch (error) {
-      console.error();
-    } finally {
-      setLoading(false);
-    }
-  };
+const HomeAnimeGrid = ({ title, animeList }: HomeAnimeGridProps) => {
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchAnimeList(anime_url);
-  }, []);
+    if (animeList?.length > 0) setLoading(false);
+  }, [animeList]);
 
   return (
     <>

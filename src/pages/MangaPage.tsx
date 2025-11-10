@@ -24,7 +24,7 @@ import { Card } from "../components/ui/card";
 import AnimeHoverCard from "../components/composite/AnimeHoverCard";
 import PaginationButton from "../components/composite/PaginationButton";
 
-const SearchPage = () => {
+const MangaPage = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const dispatch = useAppDispatch();
@@ -77,7 +77,6 @@ const SearchPage = () => {
       page: 1,
     };
     fetchSearchManga(searchParams);
-    if (debounced.trim() === "") dispatch(resetMangaSearch());
   }, [debounced, dispatch]);
 
   const nextPage = () => {
@@ -139,4 +138,4 @@ const SearchPage = () => {
   );
 };
 
-export default SearchPage;
+export default MangaPage;
