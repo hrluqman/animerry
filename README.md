@@ -71,6 +71,5 @@ The Redux store (see `src/state/store.ts`) combines feature slices for search, q
 - Animated loading skeletons for cards and grids
 - Scroll-aware navbar that hides on downward scroll and reappears on upward scroll
 - Carousel anime list on home page
-
-## Contributing
-Issues and pull requests are welcome. Please run `npm run lint` before submitting changes.
+- Additional filter based on Genres, Type, Status and Rating for Anime.
+- Manga library with instant search debounce feature. 
