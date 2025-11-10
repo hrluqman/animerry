@@ -13,6 +13,7 @@ import { Alert, AlertDescription } from "../ui/alert";
 import TopAnimeGrid from "./TopAnimeGrid";
 import AnimeHoverCard from "./AnimeHoverCard";
 import PaginationButton from "./PaginationButton";
+import type { AnimeCardItem } from "../../lib/jikanTyping";
 
 type SearchResultsGridProps = {
   fetchSearchAnime: (searchParams: Record<string, any>) => void;
@@ -82,7 +83,7 @@ const SearchResultsGrid = ({ fetchSearchAnime }: SearchResultsGridProps) => {
               />
             ))
           : searchResults?.length > 0 &&
-            searchResults?.map((item: any, index: number) => (
+            searchResults?.map((item: AnimeCardItem, index: number) => (
               <AnimeHoverCard
                 key={`${item.mal_id}-${index}`}
                 item={item}

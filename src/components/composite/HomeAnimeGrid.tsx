@@ -8,17 +8,18 @@ import {
 } from "../ui/carousel";
 import { Card } from "../ui/card";
 import AnimeHoverCard from "./AnimeHoverCard";
+import type { AnimeCardItem } from "../../lib/jikanTyping";
 
 type HomeAnimeGridProps = {
   title: string;
-  animeList: Record<string, any> | undefined;
+  animeList: AnimeCardItem[] | undefined;
 };
 
 const HomeAnimeGrid = ({ title, animeList }: HomeAnimeGridProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (animeList?.length > 0) setLoading(false);
+    if (animeList && animeList?.length > 0) setLoading(false);
   }, [animeList]);
 
   return (
@@ -35,8 +36,8 @@ const HomeAnimeGrid = ({ title, animeList }: HomeAnimeGridProps) => {
             ))
           ) : (
             <>
-              {animeList?.length > 0 &&
-                animeList?.map((item: any, index: number) => (
+              {animeList && animeList?.length > 0 &&
+                animeList?.map((item: AnimeCardItem, index: number) => (
                   <CarouselItem
                     key={index}
                     className="pl-1 basis-1/2 md:basis-1/4 lg:basis-1/6"

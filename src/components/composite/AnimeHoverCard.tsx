@@ -7,9 +7,10 @@ import {
 } from "../ui/hover-card";
 import { Button } from "../ui/button";
 import { InfoIcon } from "lucide-react";
+import type { AnimeCardItem, JikanGenre } from "../../lib/jikanTyping";
 
 interface AnimeHoverCardProps {
-  item: any;
+  item: AnimeCardItem;
   index: number;
   manga?: boolean;
 }
@@ -59,12 +60,13 @@ const AnimeHoverCard = ({
         <p className="text-light text-xs font-semibold text-wrap mb-2">
           Genres:&nbsp;
           {item.genres?.length > 0 &&
-            item.genres?.map((genre: any, index: number) => (
+            item.genres?.map((genre: JikanGenre, index: number) => (
               <span key={index} className="opacity-70">
                 {genre.name}
                 {index !== item.genres?.length - 1 && ", "}
               </span>
             ))}
+          {item.genres?.length === 0 && <span className="opacity-70">N/A</span>}
         </p>
         <Button
           className="btn-theme btn-outline text-primary-foreground hover:bg-primary/90 w-full cursor-pointer px-8 mt-2"

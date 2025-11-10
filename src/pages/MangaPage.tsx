@@ -26,6 +26,7 @@ import SearchBar from "../components/composite/Searchbar";
 import AnimeHoverCard from "../components/composite/AnimeHoverCard";
 import AnimerryFooter from "../components/composite/AnimerryFooter";
 import PaginationButton from "../components/composite/PaginationButton";
+import type { AnimeCardItem } from "../lib/jikanTyping";
 
 const MangaPage = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -133,7 +134,7 @@ const MangaPage = () => {
                 />
               ))
             : mangaSearchResults?.length > 0 &&
-              mangaSearchResults?.map((item: any, index: number) => (
+              mangaSearchResults?.map((item: AnimeCardItem, index: number) => (
                 <AnimeHoverCard
                   key={`${item.mal_id}-${index}`}
                   item={item}

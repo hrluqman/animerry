@@ -8,11 +8,12 @@ import {
 } from "./api/constants";
 import { useEffect, useRef, useState } from "react";
 import { fetchJikanApi } from "./api/http";
+import type { AnimeCardItem } from "./lib/jikanTyping";
 
 function App() {
-  const [popularAnime, setPopularAnime] = useState<Record<string, any>>();
-  const [seasonAnime, setSeasonAnime] = useState<Record<string, any>>();
-  const [upcomingAnime, setUpcomingAnime] = useState<Record<string, any>>();
+  const [popularAnime, setPopularAnime] = useState<AnimeCardItem[]>();
+  const [seasonAnime, setSeasonAnime] = useState<AnimeCardItem[]>();
+  const [upcomingAnime, setUpcomingAnime] = useState<AnimeCardItem[]>();
   const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
   const didFetch = useRef(false);
 

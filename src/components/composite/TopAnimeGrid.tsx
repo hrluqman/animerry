@@ -6,11 +6,12 @@ import { Card } from "../ui/card";
 import { Alert, AlertDescription } from "../ui/alert";
 import AnimeHoverCard from "./AnimeHoverCard";
 import PaginationButton from "./PaginationButton";
+import type { AnimeCardItem } from "../../lib/jikanTyping";
 
 const TopAnimeGrid = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const [topAnime, setTopAnime] = useState<Record<string, any>>();
+  const [topAnime, setTopAnime] = useState<AnimeCardItem[]>();
   const [currentPage, setCurrentPage] = useState<Record<string, any>>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -96,8 +97,8 @@ const TopAnimeGrid = () => {
           ))
         ) : error ? null : (
           <>
-            {topAnime?.length > 0 &&
-              topAnime?.map((item: any, index: number) => (
+            {topAnime && topAnime?.length > 0 &&
+              topAnime?.map((item: AnimeCardItem, index: number) => (
                 <AnimeHoverCard
                   key={`${item.mal_id}-${index}`}
                   item={item}
@@ -107,7 +108,7 @@ const TopAnimeGrid = () => {
           </>
         )}
       </div>
-      {!error && topAnime?.length > 0 && (
+      {!error && topAnime && topAnime?.length > 0 && (
         <PaginationButton nextPage={nextPage} prevPage={prevPage} />
       )}
     </>

@@ -14,6 +14,7 @@ import { selectQuickSearchResults } from "../../state/selector/quickSearchSelect
 import { Card } from "../ui/card";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import SearchBar from "./Searchbar";
+import type { AnimeCardItem, JikanGenre } from "../../lib/jikanTyping";
 
 const SCROLL_THRESHOLD_PX = 24;
 
@@ -104,7 +105,7 @@ const Navbar = ({ className }: React.ComponentProps<"div">) => {
             {/* Quick results dropdown */}
             {quickSearchResults?.length > 0 && (
               <Card className="bg-theme-secondary-dark absolute left-0 right-0 top-[calc(100%+0.25rem)] max-h-[50svh] flex flex-col border-0 rounded-none hover:shadow-md gap-2 overflow-x-hidden overflow-y-auto z-50 p-4">
-                {quickSearchResults?.map((item: any, index: number) => (
+                {quickSearchResults?.map((item: AnimeCardItem, index: number) => (
                   <a
                     key={`${item.mal_id}-${index}`}
                     href={`/anime/${item.mal_id}`}
@@ -124,7 +125,7 @@ const Navbar = ({ className }: React.ComponentProps<"div">) => {
                           {item.type}
                         </p>
                         <p className="text-light text-xs mt-1 line-clamp-1">
-                          {item.genres?.map((g: any) => g.name).join(", ")}
+                          {item.genres?.map((g: JikanGenre) => g.name).join(", ")}
                         </p>
                       </div>
                     </div>
