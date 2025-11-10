@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AnimerryFooter from "../components/composite/AnimerryFooter";
 import CheckboxDropdown from "../components/composite/CheckboxDropdown";
 import Navbar from "../components/composite/Navbar";
