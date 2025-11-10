@@ -61,7 +61,7 @@ const CheckboxDropdown = ({
           />
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent className="bg-theme-secondary-dark text-light w-[var(--radix-dropdown-menu-trigger-width)] min-w-56 rounded-lg">
+        <DropdownMenuContent className="bg-theme-secondary-dark text-light w-[var(--radix-dropdown-menu-trigger-width)] min-w-56 max-h-[60svh] rounded-lg">
           {multiple ? (
             // Multiple: checkbox list
             <>

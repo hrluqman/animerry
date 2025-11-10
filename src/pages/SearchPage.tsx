@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import AnimerryFooter from "../components/composite/AnimerryFooter";
 import CheckboxDropdown from "../components/composite/CheckboxDropdown";
 import Navbar from "../components/composite/Navbar";
@@ -6,7 +6,7 @@ import SearchResultsGrid from "../components/composite/SearchResultsGrid";
 import SearchBar from "../components/composite/Searchbar";
 import { Button } from "../components/ui/button";
 import { fetchJikanApi } from "../api/http";
-import { SEARCH_URL } from "../api/constants";
+import { GENRE_URL, SEARCH_URL } from "../api/constants";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
@@ -37,7 +37,7 @@ const statusSelection = [
   { value: "upcoming", label: "Upcoming" },
 ];
 
-// Enum: "1 - Action" "2 - Adventure" "5 - Avant Garde" "4 - Comedy" "8 - Drama" "10 - Fantasy" "7 - Mystery" "22 - Romance" "36 - Slice of Life"
+// Enum: "1 - Action" "2 - Adventure" "5 - Avant Garde" "4 - Comedy" "8 - Drama" "10 - Fantasy" "7 - Mystery" "22 - Romance" "36 - Slice of Life" (Fallback data)
 const genreSelection = [
   { value: "1", label: "Action" },
   { value: "2", label: "Adventure" },
@@ -65,6 +65,7 @@ const SearchPage = () => {
   const [type, setType] = useState<string[]>([]);
   const [rating, setRating] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [genresList, setGenresList] = useState(genreSelection);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -80,6 +81,32 @@ const SearchPage = () => {
       { replace: false }
     );
   }, [dispatch]);
+
+  useEffect(() => {
+    fetchAnimeGenres();
+  }, []);
+
+  const fetchAnimeGenres = async () => {
+    try {
+      let tempGenre = [];
+      const ac = new AbortController();
+      const response: Record<string, any> = await fetchJikanApi(
+        GENRE_URL,
+        {},
+        { signal: ac.signal }
+      );
+      for (var i in response.data) {
+        tempGenre.push({
+          value: response.data[i].mal_id,
+          label: response.data[i].name,
+        });
+      }
+      setGenresList(tempGenre);
+      return response?.genres;
+    } catch (error) {
+      console.error();
+    }
+  };
 
   const fetchSearchAnime = async (searchParams: Record<string, any>) => {
     try {
@@ -129,7 +156,7 @@ const SearchPage = () => {
           <SearchBar value={searchQuery} onChange={(e) => setSearchQuery(e)} />
           <CheckboxDropdown
             title="Genres"
-            data={genreSelection}
+            data={genresList}
             value={genres}
             onChange={setGenres}
           />
