@@ -72,6 +72,8 @@ export async function fetchJikanApi<T = unknown>(
   // eslint-disable-next-line no-constant-condition
   while (true) {
     try {
+      console.log(url.toString());
+      
       const res = await withTimeout(
         fetch(url.toString(), { method: "GET", signal, ...init })
       );

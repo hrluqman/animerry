@@ -164,11 +164,8 @@ const Navbar = ({ className }: React.ComponentProps<"div">) => {
         <a className="text-light text-sm" href="/search">
           Anime
         </a>
-        <a className="text-light text-sm" href="#">
-          Forum
-        </a>
-        <a className="text-light text-sm" href="#">
-          News
+        <a className="text-light text-sm" href="/manga">
+          Manga
         </a>
       </div>
     </nav>

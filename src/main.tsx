@@ -7,11 +7,13 @@ import "./index.css";
 import App from "./App.tsx";
 import SearchPage from "./pages/SearchPage";
 import DetailPage from "./pages/DetailPage";
+import MangaPage from "./pages/MangaPage.tsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
   { path: "/search", element: <SearchPage /> },
   { path: "/anime/:id", element: <DetailPage /> },
+  { path: "/manga", element: <MangaPage /> },
 ]);
 
 createRoot(document.getElementById("root")!).render(

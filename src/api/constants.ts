@@ -6,3 +6,4 @@ export const GENRE_URL  = "/genres/anime";
 export const TOP_ANIME_URL = "/top/anime?limit=24";
 export const SEASON_ANIME_URL = "/seasons/now";
 export const UPCOMING_ANIME_URL = "/seasons/upcoming";
+export const MANGA_SEARCH_URL = "/manga";

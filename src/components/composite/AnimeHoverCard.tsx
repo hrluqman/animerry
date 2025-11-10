@@ -11,14 +11,15 @@ import { useNavigate } from "react-router-dom";
 interface AnimeHoverCardProps {
   item: any;
   index: number;
+  manga?: boolean;
 }
 
-const AnimeHoverCard = ({ item, index }: AnimeHoverCardProps) => {
+const AnimeHoverCard = ({ item, index, manga = false }: AnimeHoverCardProps) => {
   const navigate = useNavigate();
 
   return (
     <HoverCard key={`${item.mal_id}-${index}`} openDelay={300}>
-      <a href={`/anime/${item.mal_id}`}>
+      <a href={manga ? `#` : `/anime/${item.mal_id}`}>
         <HoverCardTrigger asChild>
           <Card className="bg-transparent relative h-full flex flex-col justify-between border-0 hover:shadow-md gap-2 pt-0">
             {/* Fixed aspect-ratio image wrapper */}
