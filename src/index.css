@@ -51,6 +51,12 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+.fredericka-the-great-regular {
+  font-family: "Fredericka the Great", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 a {
   font-weight: 500;
   color: #cf3422;
@@ -67,6 +73,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  font-family: "Poppins", sans-serif;
 }
 
 button:hover {

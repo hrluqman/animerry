@@ -105,7 +105,7 @@ const Navbar = ({ className }: React.ComponentProps<"div">) => {
         <a href="/">
           <img src="/icon.png" className="w-[5rem]" alt="Animerry logo" />
         </a>
-        <p className="text-light text-xl font-bold">Animerry</p>
+        <p className="fredericka-the-great-regular text-theme text-xl font-bold">Animerry</p>
         <div className="relative min-w-[20rem] w-full mx-4">
           <SearchBar
             hideTitle={true}
