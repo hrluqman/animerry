@@ -10,6 +10,12 @@ import {
   selectSearchStarted,
 } from "../../app/selector/searchSelector";
 import { Button } from "../ui/button";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../ui/hover-card";
+import { InfoIcon } from "lucide-react";
 
 type SearchResultsGridProps = {
   fetchSearchAnime: (searchParams: Record<string, any>) => void;
@@ -62,37 +68,70 @@ const SearchResultsGrid = ({ fetchSearchAnime }: SearchResultsGridProps) => {
         Search results:
       </h2>
       <div className="grid gap-4 grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
-        {isLoading ? (
-          Array.from({ length: 6 }).map((_, i) => (
-            <Card
-              key={i}
-              className="bg-transparent h-full border-0 w-full aspect-[2/3] bg-zinc-800 animate-pulse"
-            />
-          ))
-        ) : searchResults?.length > 0 && (
-          searchResults?.map((item: any, index: number) => (
-            <a key={`${item.mal_id}-${index}`} href={item.url} target="_blank">
-              <Card className="bg-transparent h-full flex flex-col justify-between border-0 hover:shadow-md gap-2 pt-0">
-                {/* Fixed aspect-ratio image wrapper */}
-                <div className="relative w-full aspect-[2/3] overflow-hidden rounded">
-                  <img
-                    src={item.images?.webp?.large_image_url}
-                    alt={item.title}
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-all duration-300 ease-in-out"
-                  />
-                  <p className="absolute text-light bg-theme text-xs p-2 top-0 right-0 rounded-bl-sm">
-                    {item.type}
+        {isLoading
+          ? Array.from({ length: 6 }).map((_, i) => (
+              <Card
+                key={i}
+                className="bg-transparent h-full border-0 w-full aspect-[2/3] bg-zinc-800 animate-pulse"
+              />
+            ))
+          : searchResults?.length > 0 &&
+            searchResults?.map((item: any, index: number) => (
+              <HoverCard key={`${item.mal_id}-${index}`} openDelay={300}>
+                <a href={item.url} target="_blank">
+                  <HoverCardTrigger asChild>
+                    <Card className="bg-transparent relative h-full flex flex-col justify-between border-0 hover:shadow-md gap-2 pt-0">
+                      {/* Fixed aspect-ratio image wrapper */}
+                      <div className="relative w-full aspect-[2/3] overflow-hidden rounded">
+                        <img
+                          src={item.images?.webp?.large_image_url}
+                          alt={item.title}
+                          loading="lazy"
+                          className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-all duration-300 ease-in-out"
+                        />
+                        <p className="absolute text-light bg-theme text-xs p-2 top-0 right-0 rounded-bl-sm">
+                          {item.type}
+                        </p>
+                      </div>
+                      <p className="text-light text-sm font-semibold truncate">
+                        {item.title}
+                      </p>
+                    </Card>
+                  </HoverCardTrigger>
+                </a>
+                <HoverCardContent
+                  align="start"
+                  side="right"
+                  className="bg-theme-secondary-dark flex flex-col justify-between border-0 shadow-md pr-4"
+                >
+                  <p className="text-light text-sm font-semibold mb-2">
+                    {item.title}
                   </p>
-                </div>
-
-                <p className="text-light text-sm font-semibold truncate">
-                  {item.title}
-                </p>
-              </Card>
-            </a>
-          ))
-        )}
+                  <p className="text-light text-sm truncate-line-5 opacity-70 mb-2">
+                    {item.synopsis}
+                  </p>
+                  <p className="text-light text-xs font-semibold mb-2">
+                    Status: <span className="opacity-70">{item.status}</span>
+                  </p>
+                  <p className="text-light text-xs font-semibold text-wrap mb-2">
+                    Genres:&nbsp;
+                    {item.genres?.length > 0 ?
+                      item.genres?.map((genre: any, index: number) => (
+                        <span key={index} className="opacity-70">
+                          {genre.name}
+                          {index !== item.genres?.length - 1 && ", "}
+                        </span>
+                      ))
+                      :
+                      <span className="opacity-70">N/A</span>
+                    }
+                  </p>
+                  <Button className="btn-theme btn-outline text-primary-foreground hover:bg-primary/90 w-full cursor-pointer px-8 mt-2">
+                    <InfoIcon className="mr-2" /> More Details
+                  </Button>
+                </HoverCardContent>
+              </HoverCard>
+            ))}
       </div>
       {searchResults?.length > 0 && (
         <div className="flex justify-center items-center gap-2 mt-4">

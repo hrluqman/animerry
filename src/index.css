@@ -107,6 +107,12 @@ button:focus-visible {
   border-color: #cf3422;
 }
 
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid #cf3422;
+  color: #f8fafc;
+}
+
 .input-theme {
   background: #1c1c1c;
   height: 2.5rem;
@@ -116,6 +122,14 @@ button:focus-visible {
   -webkit-transition: all 0.15s;
   -moz-transition: all 0.15s;
   transition: all 0.15s;
+}
+
+.truncate-line-5 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
 }
 
 @theme inline {
