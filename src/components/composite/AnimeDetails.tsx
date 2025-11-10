@@ -22,7 +22,7 @@ type AnimeDetail = {
   streaming?: Entry[];
 };
 
-interface Props {
+interface AnimeDetailPageProps {
   data: AnimeDetail;
 }
 
@@ -35,7 +35,7 @@ const chip = (label: string, key?: Key) => (
   </span>
 );
 
-export default function AnimeDetailPage({ data }: Props) {
+export default function AnimeDetailPage({ data }: AnimeDetailPageProps) {
   const banner = data.images?.webp?.large_image_url || "";
   const cover = data.images?.webp?.image_url || banner;
   const title = data.title_english || data.title || "Untitled";
@@ -156,7 +156,7 @@ export default function AnimeDetailPage({ data }: Props) {
                   </a>
                 ))
               ) : (
-                <li className="text-white/60">Not available</li>
+                <p className="text-xs text-white/60">Not available</p>
               )}
             </div>
           </aside>
