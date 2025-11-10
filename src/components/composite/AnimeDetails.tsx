@@ -1,6 +1,6 @@
 import type { Key } from "react";
-import AnimerryFooter from "./AnimerryFooter";
 import Navbar from "./Navbar";
+import AnimerryFooter from "./AnimerryFooter";
 
 type Img = { webp?: { image_url?: string; large_image_url?: string } };
 

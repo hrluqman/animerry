@@ -1,14 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import AnimerryFooter from "../components/composite/AnimerryFooter";
-import CheckboxDropdown from "../components/composite/CheckboxDropdown";
-import Navbar from "../components/composite/Navbar";
-import SearchResultsGrid from "../components/composite/SearchResultsGrid";
-import SearchBar from "../components/composite/Searchbar";
-import { Button } from "../components/ui/button";
 import { fetchJikanApi } from "../api/http";
+import { useAppDispatch } from "../state/hooks";
+import { useEffect, useRef, useState } from "react";
 import { GENRE_URL, SEARCH_URL } from "../api/constants";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { resetAnimeDetails } from "../state/slice/animeDetailsSlice";
 import {
   resetSearch,
   setCurrentQuery,
@@ -18,7 +13,12 @@ import {
   setSearchError,
   setSearchStarted,
 } from "../state/slice/searchSlice";
-import { resetAnimeDetails } from "../state/slice/animeDetailsSlice";
+import { Button } from "../components/ui/button";
+import Navbar from "../components/composite/Navbar";
+import SearchBar from "../components/composite/Searchbar";
+import AnimerryFooter from "../components/composite/AnimerryFooter";
+import CheckboxDropdown from "../components/composite/CheckboxDropdown";
+import SearchResultsGrid from "../components/composite/SearchResultsGrid";
 
 // Enum: "tv" "movie" "ova" "special" "ona" "music" "tv_special"
 const typeSelection = [
@@ -69,7 +69,7 @@ const SearchPage = () => {
   const [genresList, setGenresList] = useState(genreSelection);
   const didFetch = useRef(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [params] = useSearchParams();
 

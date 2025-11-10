@@ -1,19 +1,19 @@
-import { useEffect, useRef, useState } from "react";
 import { cn } from "../../lib/utils";
-import SearchBar from "./Searchbar";
-import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import { fetchJikanApi } from "../../api/http";
 import { SEARCH_URL } from "../../api/constants";
+import { useEffect, useRef, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
+import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import {
   resetQuickSearch,
   setQuickSearchLoading,
   setQuickSearchPagination,
   setQuickSearchResults,
 } from "../../state/slice/quickSearchSlice";
-import { Card } from "../ui/card";
 import { selectQuickSearchResults } from "../../state/selector/quickSearchSelector";
+import { Card } from "../ui/card";
 import { Separator } from "@radix-ui/react-dropdown-menu";
+import SearchBar from "./Searchbar";
 
 const SCROLL_THRESHOLD_PX = 24;
 
@@ -87,11 +87,7 @@ const Navbar = ({ className }: React.ComponentProps<"div">) => {
         {/* Left: Logo + Brand + Search */}
         <div className="flex items-center gap-3 min-w-0 flex-1 md:flex-initial md:w-2/3 mr-1 md:mr-0">
           <a href="/" className="shrink-0">
-            <img
-              src="/icon.png"
-              className="w-10 md:w-16"
-              alt="Animerry logo"
-            />
+            <img src="/icon.png" className="w-10 md:w-16" alt="Animerry logo" />
           </a>
           <p className="hidden md:block fredericka-the-great-regular text-theme text-lg md:text-xl font-bold shrink-0">
             Animerry
@@ -109,7 +105,10 @@ const Navbar = ({ className }: React.ComponentProps<"div">) => {
             {quickSearchResults?.length > 0 && (
               <Card className="bg-theme-secondary-dark absolute left-0 right-0 top-[calc(100%+0.25rem)] max-h-[50svh] flex flex-col border-0 rounded-none hover:shadow-md gap-2 overflow-x-hidden overflow-y-auto z-50 p-4">
                 {quickSearchResults?.map((item: any, index: number) => (
-                  <a key={`${item.mal_id}-${index}`} href={`/anime/${item.mal_id}`}>
+                  <a
+                    key={`${item.mal_id}-${index}`}
+                    href={`/anime/${item.mal_id}`}
+                  >
                     <div className="flex items-center gap-2">
                       <img
                         src={item.images?.webp?.image_url}
@@ -121,7 +120,9 @@ const Navbar = ({ className }: React.ComponentProps<"div">) => {
                         <p className="text-light text-sm font-semibold truncate">
                           {item.title}
                         </p>
-                        <p className="text-light text-xs opacity-70">{item.type}</p>
+                        <p className="text-light text-xs opacity-70">
+                          {item.type}
+                        </p>
                         <p className="text-light text-xs mt-1 line-clamp-1">
                           {item.genres?.map((g: any) => g.name).join(", ")}
                         </p>
@@ -144,8 +145,12 @@ const Navbar = ({ className }: React.ComponentProps<"div">) => {
 
         {/* Right: Desktop links */}
         <div className="hidden md:flex items-center gap-4">
-          <a className="text-light text-sm" href="/search">Anime</a>
-          <a className="text-light text-sm" href="/manga">Manga</a>
+          <a className="text-light text-sm" href="/search">
+            Anime
+          </a>
+          <a className="text-light text-sm" href="/manga">
+            Manga
+          </a>
         </div>
 
         {/* Mobile menu toggle */}
@@ -154,8 +159,7 @@ const Navbar = ({ className }: React.ComponentProps<"div">) => {
           aria-label="Toggle menu"
           onClick={() => setMenuOpen((v) => !v)}
         >
-          <span className="sr-only">Menu</span>
-          ☰
+          <span className="sr-only">Menu</span>☰
         </button>
       </div>
 
@@ -167,10 +171,18 @@ const Navbar = ({ className }: React.ComponentProps<"div">) => {
         )}
       >
         <div className="flex justify-center items-center px-4 pb-3 pt-2 flex gap-4">
-          <a className="text-light text-sm" href="/search" onClick={() => setMenuOpen(false)}>
+          <a
+            className="text-light text-sm"
+            href="/search"
+            onClick={() => setMenuOpen(false)}
+          >
             Anime
           </a>
-          <a className="text-light text-sm" href="/manga" onClick={() => setMenuOpen(false)}>
+          <a
+            className="text-light text-sm"
+            href="/manga"
+            onClick={() => setMenuOpen(false)}
+          >
             Manga
           </a>
         </div>
@@ -178,6 +190,5 @@ const Navbar = ({ className }: React.ComponentProps<"div">) => {
     </nav>
   );
 };
-
 
 export default Navbar;

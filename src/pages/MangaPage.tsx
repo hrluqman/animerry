@@ -1,14 +1,9 @@
-import { useEffect, useState } from "react";
-import AnimerryFooter from "../components/composite/AnimerryFooter";
-import Navbar from "../components/composite/Navbar";
-import SearchBar from "../components/composite/Searchbar";
 import { fetchJikanApi } from "../api/http";
-import { MANGA_SEARCH_URL } from "../api/constants";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useDebounce } from "../hooks/useDebounce";
+import { MANGA_SEARCH_URL } from "../api/constants";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
-import { Card } from "../components/ui/card";
-import { Alert, AlertDescription } from "../components/ui/alert";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   resetMangaSearch,
   setMangaSearchCurrentQuery,
@@ -24,7 +19,12 @@ import {
   selectMangaSearchPagination,
   selectMangaSearchResults,
 } from "../state/selector/mangaSearchSelector";
+import { Card } from "../components/ui/card";
+import { Alert, AlertDescription } from "../components/ui/alert";
+import Navbar from "../components/composite/Navbar";
+import SearchBar from "../components/composite/Searchbar";
 import AnimeHoverCard from "../components/composite/AnimeHoverCard";
+import AnimerryFooter from "../components/composite/AnimerryFooter";
 import PaginationButton from "../components/composite/PaginationButton";
 
 const MangaPage = () => {

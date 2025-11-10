@@ -1,12 +1,12 @@
-import { InfoIcon } from "lucide-react";
-import { Button } from "../ui/button";
+import { useNavigate } from "react-router-dom";
 import { Card } from "../ui/card";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "../ui/hover-card";
-import { useNavigate } from "react-router-dom";
+import { Button } from "../ui/button";
+import { InfoIcon } from "lucide-react";
 
 interface AnimeHoverCardProps {
   item: any;
@@ -14,7 +14,11 @@ interface AnimeHoverCardProps {
   manga?: boolean;
 }
 
-const AnimeHoverCard = ({ item, index, manga = false }: AnimeHoverCardProps) => {
+const AnimeHoverCard = ({
+  item,
+  index,
+  manga = false,
+}: AnimeHoverCardProps) => {
   const navigate = useNavigate();
 
   return (

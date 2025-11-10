@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Card } from "../ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -7,6 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
+import { Card } from "../ui/card";
 import AnimeHoverCard from "./AnimeHoverCard";
 
 type HomeAnimeGridProps = {

@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import { fetchJikanApi } from "../../api/http";
+import { useEffect, useRef, useState } from "react";
 import { TOP_ANIME_URL } from "../../api/constants";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Card } from "../ui/card";
+import { Alert, AlertDescription } from "../ui/alert";
 import AnimeHoverCard from "./AnimeHoverCard";
 import PaginationButton from "./PaginationButton";
-import { Alert, AlertDescription } from "../ui/alert";
 
 const TopAnimeGrid = () => {
   const navigate = useNavigate();

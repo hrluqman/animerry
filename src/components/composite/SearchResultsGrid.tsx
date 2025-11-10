@@ -1,7 +1,5 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { Card } from "../ui/card";
-import TopAnimeGrid from "./TopAnimeGrid";
 import { useAppSelector } from "../../state/hooks";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   selectSearchCurrentQuery,
   selectSearchError,
@@ -10,9 +8,11 @@ import {
   selectSearchResults,
   selectSearchStarted,
 } from "../../state/selector/searchSelector";
+import { Card } from "../ui/card";
+import { Alert, AlertDescription } from "../ui/alert";
+import TopAnimeGrid from "./TopAnimeGrid";
 import AnimeHoverCard from "./AnimeHoverCard";
 import PaginationButton from "./PaginationButton";
-import { Alert, AlertDescription } from "../ui/alert";
 
 type SearchResultsGridProps = {
   fetchSearchAnime: (searchParams: Record<string, any>) => void;
