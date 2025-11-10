@@ -78,8 +78,8 @@ function App() {
       </section>
 
       <section className="container w-full max-w-7xl mx-auto">
-        <HomeAnimeGrid title="Most Popular This Season" animeList={popularAnime} />
-        <HomeAnimeGrid title="Top Recommendations" animeList={seasonAnime} />
+        <HomeAnimeGrid title="Most Popular This Season" animeList={seasonAnime} />
+        <HomeAnimeGrid title="Top Recommendations" animeList={popularAnime} />
         <HomeAnimeGrid title="Upcoming Next Season" animeList={upcomingAnime} />
       </section>
 
