@@ -82,7 +82,7 @@ const TopAnimeGrid = () => {
             {topAnime?.length > 0 &&
               topAnime?.map((item: any, index: number) => (
                 <HoverCard key={`${item.mal_id}-${index}`} openDelay={300}>
-                  <a href={item.url} target="_blank">
+                  <a href={`/anime/${item.mal_id}`}>
                     <HoverCardTrigger asChild>
                       <Card className="bg-transparent relative h-full flex flex-col justify-between border-0 hover:shadow-md gap-2 pt-0">
                         {/* Fixed aspect-ratio image wrapper */}
@@ -112,7 +112,7 @@ const TopAnimeGrid = () => {
                       <span key={index} className="opacity-70">{genre.name}{index !== item.genres?.length - 1 && ", "}</span>
                     ))}
                     </p>
-                    <Button className="btn-theme btn-outline text-primary-foreground hover:bg-primary/90 w-full cursor-pointer px-8 mt-2"><InfoIcon className="mr-2" /> More Details</Button>
+                    <Button className="btn-theme btn-outline text-primary-foreground hover:bg-primary/90 w-full cursor-pointer px-8 mt-2" onClick={() => navigate(`/anime/${item.mal_id}`)}><InfoIcon className="mr-2" /> More Details</Button>
                   </HoverCardContent>
                 </HoverCard>
               ))}

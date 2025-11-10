@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { cn } from "../../lib/utils";
 
 const SCROLL_THRESHOLD_PX = 24;
 
-const Navbar = () => {
+const Navbar = ({ className }: React.ComponentProps<"div">) => {
   const [visible, setVisible] = useState(true);
   const lastYRef = useRef(0);
   const tickingRef = useRef(false);
@@ -45,15 +46,15 @@ const Navbar = () => {
 
   return (
     <nav
-      className={[
+      className={cn([
         "bg-theme-secondary-dark fixed top-0 left-0 w-full flex justify-between items-center z-[999] px-24",
         "transition-transform duration-500 ease-in-out",
         visible ? "translate-y-0" : "-translate-y-full",
-      ].join(" ")}
+      ].join(" "), className)}
     >
       <div className="flex justify-center items-center">
         <a href="/">
-          <img src="./icon.png" className="w-[5rem]" alt="Animerry logo" />
+          <img src="/icon.png" className="w-[5rem]" alt="Animerry logo" />
         </a>
         <p className="text-light text-xl font-bold">Animerry</p>
       </div>

@@ -2,7 +2,7 @@ import { CopyrightIcon } from "lucide-react";
 
 const AnimerryFooter = () => {
   return (
-    <footer className="flex flex-col justify-center items-center my-8">
+    <footer className="flex flex-col justify-center items-center py-8">
       <div className="flex justify-center items-center">
         <p className="text-light text-[9px]">
           <CopyrightIcon className="inline-block -translate-y-[1px]" size={8} />{" "}

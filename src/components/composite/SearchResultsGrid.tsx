@@ -78,7 +78,7 @@ const SearchResultsGrid = ({ fetchSearchAnime }: SearchResultsGridProps) => {
           : searchResults?.length > 0 &&
             searchResults?.map((item: any, index: number) => (
               <HoverCard key={`${item.mal_id}-${index}`} openDelay={300}>
-                <a href={item.url} target="_blank">
+                <a href={`/anime/${item.mal_id}`}>
                   <HoverCardTrigger asChild>
                     <Card className="bg-transparent relative h-full flex flex-col justify-between border-0 hover:shadow-md gap-2 pt-0">
                       {/* Fixed aspect-ratio image wrapper */}

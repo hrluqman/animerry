@@ -16,6 +16,7 @@ import {
   setResults,
   setSearchStarted,
 } from "../app/slice/searchSlice";
+import { resetAnimeDetails } from "../app/slice/animeDetailsSlice";
 
 // Enum: "tv" "movie" "ova" "special" "ona" "music" "tv_special"
 const typeSelection = [
@@ -70,6 +71,7 @@ const SearchPage = () => {
 
   useEffect(() => {
     dispatch(resetSearch());
+    dispatch(resetAnimeDetails());
     const next = new URLSearchParams(params);
     next.set("page", "1");
     navigate(
