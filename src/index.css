@@ -124,6 +124,12 @@ button:focus-visible {
   transition: all 0.15s;
 }
 
+.input-theme-nav {
+  background-color: #0e0e0e;
+  border-radius: 10rem;
+  height: 3rem;
+}
+
 .truncate-line-5 {
   overflow: hidden;
   text-overflow: ellipsis;
