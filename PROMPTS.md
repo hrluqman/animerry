@@ -58,3 +58,27 @@ Centralize data fetching with types, pagination, and request cancellation handle
 Provide a small, typed fetch layer usable from any component or thunk with retries and AbortController support.
 
 ---
+
+# Prompt Four
+
+**Act as a senior TypeScript engineer**. Generate precise, minimal TypeScript types from the provided Jikan anime JSON object. Create a full detail type and a card/list subset type for UI mapping, ensuring fields match the sample exactly (nullable where needed) and remain serializable.
+
+## Requirements
+
+### Derive strongly-typed interfaces for nested structures (images, trailer, titles, aired, companies, genres/demographics).
+
+### Produce:
+* AnimeDetail — full schema matching the sample.
+* AnimeCardItem — a subset for cards/hover previews using only: mal_id, images, title, type, synopsis, status, genres.
+* Use discriminated unions/Enums only where shown by sample (avoid invented values).
+* Mark optional/nullable fields correctly (e.g., string | null).
+* Keep naming consistent with Jikan (e.g., images.jpg.large_image_url).
+* No implementation code, no fetch logic—types only.
+
+## Deliverables
+
+TypeScript block with: supporting types (JikanImageVariant, JikanImages, JikanTrailerImages, JikanTrailer, JikanTitle, JikanAiredProp, JikanAired, JikanCompany, JikanGenre), then AnimeDetail, then AnimeCardItem as Pick<AnimeDetail, `mal_id` | `images` | `title` | `type` | `synopsis` | `status` | `genres`>.
+
+## Objective
+
+Provide clean, copy‑pasteable TypeScript typings that let the UI replace any in .map((item, i) => ...) for hover cards and lists, while preserving a full detail type for the details page.
